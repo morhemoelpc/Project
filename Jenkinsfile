@@ -3,12 +3,12 @@ pipeline {
     options {
         timestamps()
         buildDiscarder(strategy: logRotator(numToKeepStr: '5', artifactNumToKeepStr: '20'))
+        triggers {
+            pollSCM('*/30 * * * *')
+        }
     }
     stages {
         stage('SCM Poll') {
-            triggers {
-                pollSCM('*/30 * * * *')
-            }
             steps {
                 git url: 'https://github.com/morhemoelpc/Project.git'
             }
