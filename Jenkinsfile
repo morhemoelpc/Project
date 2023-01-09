@@ -4,9 +4,7 @@ pipeline {
     options {
         timestamps()
         buildDiscarder(strategy: logRotator(numToKeepStr: '5', artifactNumToKeepStr: '20'))
-        triggers {
-            cron('*/30 * * * *')
-        }
+        cron('*/30 * * * *')
     }
 
     stages {
