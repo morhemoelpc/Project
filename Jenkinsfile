@@ -1,47 +1,46 @@
 pipeline {
     agent any
+
     options {
         timestamps()
         buildDiscarder(strategy: logRotator(numToKeepStr: '5', artifactNumToKeepStr: '20'))
-    }
-    triggers {
         pollSCM('*/30 * * * *')
-        }
     }
+
     stages {
-        stage('SCM Poll') {
+        stage('Clone repository') {
             steps {
                 git url: 'https://github.com/morhemoelpc/Project.git'
             }
         }
-        stage('Run Backend Server') {
+        stage('Run backend server') {
             steps {
                 bat 'start /min python rest_app.py'
             }
         }
-        stage('Run Frontend Server') {
+        stage('Run frontend server') {
             steps {
                 bat 'start /min python web_app.py'
             }
         }
-        stage('Backend Testing') {
+        stage('Run backend tests') {
             steps {
-                python 'backend_testing.py'
+                sh 'python backend_testing.py'
             }
         }
-        stage('Frontend Testing') {
+        stage('Run frontend tests') {
             steps {
-                python 'frontend_testing.py'
+                sh 'python frontend_testing.py'
             }
         }
-        stage('Combined Testing') {
+        stage('Run combined tests') {
             steps {
-                python 'combined_testing.py'
+                sh 'python combined_testing.py'
             }
         }
-        stage('Clean Environment') {
+        stage('Clean environment') {
             steps {
-                python 'clean_environment.py'
+                sh 'python clean_environment.py'
             }
         }
     }
