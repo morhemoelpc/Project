@@ -28,7 +28,7 @@ pipeline {
                 sh 'python backend_testing.py'
             }
         }
-        stage('Run frontend tests') {
+        stage('Run fronted tests') {
             steps {
                 sh 'python frontend_testing.py'
             }
