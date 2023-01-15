@@ -1,13 +1,13 @@
 pipeline {
     agent any
-
-    options {
-        timestamps()
-        buildDiscarder(strategy: logRotator(numToKeepStr: '5', artifactNumToKeepStr: '20'))
-        cron('*/30 * * * *')
-    }
-
     stages {
+        stage('checkout') {
+            steps {
+                script {
+                    properties([pipelineTriggers([pollSCM('*/30 * * * *')])])
+                }
+            }
+        }
         stage('Clone repository') {
             steps {
                 git url: 'https://github.com/morhemoelpc/Project.git'
