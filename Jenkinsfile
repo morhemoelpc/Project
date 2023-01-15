@@ -30,7 +30,7 @@ pipeline {
         }
         stage('Run fronted tests') {
             steps {
-                sh 'python frontend_testing.py'
+                sh 'python fronted_testing.py'
             }
         }
         stage('Run combined tests') {
